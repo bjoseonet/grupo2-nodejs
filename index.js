@@ -14,9 +14,13 @@ app.use(express.json());
 // app.use('/productos', productosRouter);
 
 // lo anterior se puede escribir asi
-app.use('/productos', require('./routes/productos.router'));
+app.use('/product', require('./routes/product.router'));
 
 // USUARIOS
+
+app.use('/coment', require('./routes/coment.router'));
+
+// COMENTARIOS
 
 app.use('/usuarios', require('./routes/usuarios.router'));
 
