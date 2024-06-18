@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const controller = require('../controllers/productos.controller');
+const controller = require('../controllers/coment.controller');
 
-// Prefijo: /productos
+// Prefijo: /coment
 
 router.get('/', controller.index);
 router.get('/:id', controller.show);

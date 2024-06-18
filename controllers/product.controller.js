@@ -5,7 +5,7 @@ const db = require('../db/dbw');
 
 const index = (req, res) => {
   //  console.log('index');
-  const sql = 'SELECT * FROM productos';
+  const sql = 'SELECT * FROM product';
   db.query(sql, (error, rows) => {
     if (error) {
       return res.status(500).json({ error: 'Intente mas tarde' });
@@ -20,7 +20,7 @@ const index = (req, res) => {
 const show = (req, res) => {
   const { id } = req.params;
 
-  const sql = 'SELECT * FROM productos WHERE id = ?';
+  const sql = 'SELECT * FROM product WHERE id = ?';
   db.query(sql, [id], (error, rows) => {
     // console.log(rows);
     if (error) {
@@ -36,47 +36,34 @@ const show = (req, res) => {
 };
 
 const store = (req, res) => {
-  db.query(sql, [email], (error, rows) => {
-    // console.log(rows);
+  // console.log(req.body);
+  const { product_name, description, price, image } = req.body;
+
+  const sql =
+    'INSERT INTO product (product_name, description, price, image) VALUES (?, ?, ?, ?)';
+  db.query(sql, [product_name, description, price, image], (error, result) => {
+    // console.log(result);
     if (error) {
       return res.status(500).json({ error: 'Intente mas tarde' });
     }
 
-    if (rows.length != 0) {
-      return res.status(200).send({ error: 'Este mail ya esta registrado' });
-    }
+    const producto = { ...req.body, id: result.insertId };
 
-    // console.log(req.body);
-    const { email, first_name, last_name, zip, password } = req.body;
-
-    const sql =
-      'INSERT INTO productos (email, first_name, last_name, zip, password) VALUES (?, ?, ?,?,?)';
-    db.query(
-      sql,
-      [email, first_name, last_name, zip, password],
-      (error, result) => {
-        // console.log(result);
-        if (error) {
-          return res.status(500).json({ error: 'Intente mas tarde' });
-        }
-
-        const producto = { ...req.body, id: result.insertId };
-
-        res.status(201).json(producto);
-      }
-    );
+    res.status(201).json(producto);
   });
 };
 
 const update = (req, res) => {
+  console.log(req.params);
+  console.log(req.body);
   const { id } = req.params;
-  const { email, first_name, last_name, zip, password } = req.body;
+  const { product_name, description, price, date_sale, image } = req.body;
 
   const sql =
-    'UPDATE productos SET email = ? ,first_name = ?, last_name = ?, zip = ? ,  password = ? WHERE id = ?';
+    'UPDATE product SET product_name = ? ,description = ?, date_sale = ?, image = ? ,  WHERE id = ?';
   db.query(
     sql,
-    [email, first_name, last_name, zip, password, id],
+    [product_name, description, price, date_sale, image, id],
     (error, result) => {
       //console.log(result);
       if (error) {
@@ -97,7 +84,7 @@ const update = (req, res) => {
 const destroy = (req, res) => {
   const { id } = req.params;
 
-  const sql = 'DELETE FROM productos WHERE id = ?';
+  const sql = 'DELETE FROM product WHERE id = ?';
   db.query(sql, [id], (error, result) => {
     // console.log(result);
     if (error) {
