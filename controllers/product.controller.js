@@ -4,7 +4,6 @@
 const db = require('../db/dbw');
 
 const index = (req, res) => {
-  //  console.log('index');
   const sql = 'SELECT * FROM product';
   db.query(sql, (error, rows) => {
     if (error) {
@@ -22,7 +21,6 @@ const show = (req, res) => {
 
   const sql = 'SELECT * FROM product WHERE id = ?';
   db.query(sql, [id], (error, rows) => {
-    // console.log(rows);
     if (error) {
       return res.status(500).json({ error: 'Intente mas tarde' });
     }
@@ -36,13 +34,11 @@ const show = (req, res) => {
 };
 
 const store = (req, res) => {
-  // console.log(req.body);
   const { product_name, description, price, image } = req.body;
 
   const sql =
     'INSERT INTO product (product_name, description, price, image) VALUES (?, ?, ?, ?)';
   db.query(sql, [product_name, description, price, image], (error, result) => {
-    // console.log(result);
     if (error) {
       return res.status(500).json({ error: 'Intente mas tarde' });
     }
@@ -54,18 +50,15 @@ const store = (req, res) => {
 };
 
 const update = (req, res) => {
-  console.log(req.params);
-  console.log(req.body);
   const { id } = req.params;
   const { product_name, description, price, date_sale, image } = req.body;
 
   const sql =
-    'UPDATE product SET product_name = ? ,description = ?, date_sale = ?, image = ? ,  WHERE id = ?';
+    'UPDATE product SET product_name = ? ,description = ?, price = ? ,date_sale = ?, image = ? WHERE id = ?';
   db.query(
     sql,
     [product_name, description, price, date_sale, image, id],
     (error, result) => {
-      //console.log(result);
       if (error) {
         return res.status(500).json({ error: 'Intente mas tarde' });
       }
@@ -86,7 +79,6 @@ const destroy = (req, res) => {
 
   const sql = 'DELETE FROM product WHERE id = ?';
   db.query(sql, [id], (error, result) => {
-    // console.log(result);
     if (error) {
       return res.status(500).json({ error: 'Intente mas tarde' });
     }
