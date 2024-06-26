@@ -12,7 +12,7 @@ connection.connect((error) => {
     return console.error(error);
   }
 
-  console.log('Conectado');
+  console.log('Conectado ONLINE');
 });
 
 module.exports = connection;
