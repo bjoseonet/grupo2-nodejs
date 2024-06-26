@@ -1,7 +1,7 @@
 // utiliza base de datos local
-//const db = require('../db/db');
+const db = require('../db/db');
 // utiliza base de datos alwaysdata
-const db = require('../db/dbw');
+//const db = require('../db/dbw');
 
 const index = (req, res) => {
   const sql = 'SELECT * FROM usuarios';
@@ -10,7 +10,7 @@ const index = (req, res) => {
       return res.status(500).json({ error: 'Intente mas tarde' });
     }
     if (rows.length == 0) {
-      return res.status(404).send({ error: 'No existe el usuario' });
+      return res.status(404).send({ error: 'No existen usuarios' });
     }
     res.json(rows);
   });
